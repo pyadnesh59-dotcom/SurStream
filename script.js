@@ -4,21 +4,16 @@ async function searchMusic() {
     const query = document.getElementById('searchInput').value;
     if (!query) return;
 
-    // Line 8: Fixed with correct backticks and full URL path
     const url = `https://googleapis.com{encodeURIComponent(query)}&type=video&key=${apiKey}`;
-
 
     try {
         const response = await fetch(url);
         const data = await response.json();
-        
         if (data.items) {
             displayResults(data.items);
-        } else {
-            console.log("No results found or API limit reached.");
         }
     } catch (error) {
-        console.error("Connection Error:", error);
+        console.error(error);
     }
 }
 
