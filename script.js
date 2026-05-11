@@ -5,7 +5,8 @@ async function searchMusic() {
     if (!query) return;
 
     // Line 8: Fixed with correct backticks and full URL path
-    const url = `https://googleapis.com${encodeURIComponent(query)}&type=video&key=${apiKey}`;
+    const url = `https://googleapis.com{encodeURIComponent(query)}&type=video&key=${apiKey}`;
+
 
     try {
         const response = await fetch(url);
