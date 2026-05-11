@@ -1,53 +1,40 @@
-const clientId = '06d21b67a58c4f3bb6f18a3ad9c6fff4';
-const clientSecret = '2d8f3cd7f9d64c779dd38c3e950bc95a';
-
-async function getAccessToken() {
-    const response = await fetch('https://spotify.com', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
-        },
-        body: 'grant_type=client_credentials'
-    });
-    const data = await response.json();
-    return data.access_token;
-}
+const apiKey = 'AIzaSyB-sQk0RwqAbKy36pPI3AmIVcCr5DW3VKA';
 
 async function searchMusic() {
     const query = document.getElementById('searchInput').value;
     if (!query) return;
 
+    const url = `https://googleapis.com{encodeURIComponent(query + " music")}&type=video&key=${apiKey}`;
+
     try {
-        const token = await getAccessToken();
-        const response = await fetch(`https://spotify.com{encodeURIComponent(query)}&type=track&limit=10`, {
-            headers: { 'Authorization': 'Bearer ' + token }
-        });
+        const response = await fetch(url);
         const data = await response.json();
-        displayResults(data.tracks.items);
+        displayResults(data.items);
     } catch (error) {
-        console.error("Search failed:", error);
+        console.error("Error fetching from YouTube:", error);
     }
 }
 
-function displayResults(tracks) {
+function displayResults(items) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';
 
-    tracks.forEach(track => {
+    items.forEach(item => {
+        const videoId = item.id.videoId;
+        const title = item.snippet.title;
+        const thumbnail = item.snippet.thumbnails.medium.url;
+
         const card = document.createElement('div');
         card.className = 'song-card';
         card.innerHTML = `
-            <img src="${track.album.images[0].url}" alt="album art">
-            <h3>${track.name}</h3>
-            <p>${track.artists[0].name}</p>
-            <button onclick="playSong('${track.name}', '${track.artists[0].name}')">Play</button>
+            <img src="${thumbnail}" alt="thumb" style="width:200px; border-radius:10px;">
+            <h3 style="font-size:16px;">${title}</h3>
+            <button onclick="playSong('${videoId}')">Play</button>
         `;
         resultsDiv.appendChild(card);
     });
 }
 
-function playSong(song, artist) {
-    const url = `https://youtube.com{encodeURIComponent(song + ' ' + artist)}`;
-    window.open(url, '_blank');
+function playSong(id) {
+    window.open(`https://youtube.com{id}`, '_blank');
 }
