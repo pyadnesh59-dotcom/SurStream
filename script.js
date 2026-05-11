@@ -1,5 +1,5 @@
 const clientId = '06d21b67a58c4f3bb6f18a3ad9c6fff4'; // 
-const clientSecret = 'PASTE_YOUR_ACTUAL_SECRET_HERE'; //
+const clientSecret = '2d8f3cd7f9d64c779dd38c3e950bc95a'; //
 
 async function getAccessToken() {
     const response = await fetch('https://spotify.com', {
