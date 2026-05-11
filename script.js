@@ -4,14 +4,20 @@ async function searchMusic() {
     const query = document.getElementById('searchInput').value;
     if (!query) return;
 
-    const url = `https://googleapis.com{encodeURIComponent(query + " music")}&type=video&key=${apiKey}`;
+    // Fixed URL structure
+    const url = `https://googleapis.com{encodeURIComponent(query)}&type=video&key=${apiKey}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
-        displayResults(data.items);
+        
+        if (data.items) {
+            displayResults(data.items);
+        } else {
+            console.log("No results found or API limit reached.");
+        }
     } catch (error) {
-        console.error("Error fetching from YouTube:", error);
+        console.error("Connection Error:", error);
     }
 }
 
@@ -22,19 +28,15 @@ function displayResults(items) {
     items.forEach(item => {
         const videoId = item.id.videoId;
         const title = item.snippet.title;
-        const thumbnail = item.snippet.thumbnails.medium.url;
+        const thumb = item.snippet.thumbnails.medium.url;
 
         const card = document.createElement('div');
         card.className = 'song-card';
         card.innerHTML = `
-            <img src="${thumbnail}" alt="thumb" style="width:200px; border-radius:10px;">
-            <h3 style="font-size:16px;">${title}</h3>
-            <button onclick="playSong('${videoId}')">Play</button>
+            <img src="${thumb}" style="width:200px; border-radius:10px;">
+            <h3>${title}</h3>
+            <button onclick="window.open('https://youtube.com{videoId}')">Play</button>
         `;
         resultsDiv.appendChild(card);
     });
-}
-
-function playSong(id) {
-    window.open(`https://youtube.com{id}`, '_blank');
 }
