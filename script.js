@@ -26,7 +26,7 @@ async function searchMusic() {
         const data = await response.json();
         displayResults(data.tracks.items);
     } catch (error) {
-        console.error(error);
+        console.error("Search failed:", error);
     }
 }
 
@@ -38,7 +38,7 @@ function displayResults(tracks) {
         const card = document.createElement('div');
         card.className = 'song-card';
         card.innerHTML = `
-            <img src="${track.album.images[0].url}" alt="art" style="width:200px; border-radius:10px;">
+            <img src="${track.album.images[0].url}" alt="album art">
             <h3>${track.name}</h3>
             <p>${track.artists[0].name}</p>
             <button onclick="playSong('${track.name}', '${track.artists[0].name}')">Play</button>
@@ -48,6 +48,6 @@ function displayResults(tracks) {
 }
 
 function playSong(song, artist) {
-    const youtubeUrl = `https://youtube.com{encodeURIComponent(song + ' ' + artist)}`;
-    window.open(youtubeUrl, '_blank');
+    const url = `https://youtube.com{encodeURIComponent(song + ' ' + artist)}`;
+    window.open(url, '_blank');
 }
