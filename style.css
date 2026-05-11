@@ -11,4 +11,4 @@ input { padding: 10px; width: 60%; border-radius: 5px; border: none; }
 button { padding: 10px 20px; background-color: #1DB954; color: white; border: none; border-radius: 5px; cursor: pointer; }
 #results { margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; }
 .song-card { margin: 10px; padding: 10px; background: #282828; border-radius: 10px; width: 200px; }
-.song-card img { width: 100%; border-radius: 5px; }
+.song-card im { width: 100%; border-radius: 5px; }
