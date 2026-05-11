@@ -1,8 +1,6 @@
-// 1. YOUR KEYS (Where to paste)
-const clientId = '06d21b67a58c4f3bb6f18a3ad9c6fff4'; // Your ID is already here
-const clientSecret = '2d8f3cd7f9d64c779dd38c3e950bc95a'; // <--- Paste your Secret inside these quotes
+const clientId = '06d21b67a58c4f3bb6f18a3ad9c6fff4'; // 
+const clientSecret = 'PASTE_YOUR_ACTUAL_SECRET_HERE'; //
 
-// 2. THE BRAIN (Don't change anything below this line)
 async function getAccessToken() {
     const response = await fetch('https://spotify.com', {
         method: 'POST',
@@ -50,4 +48,3 @@ function playSong(songName, artistName) {
     const youtubeUrl = `https://youtube.com{encodeURIComponent(query)}`;
     window.open(youtubeUrl, '_blank'); 
 }
-
